@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import CommonButton from './components/commonButton';
 import CommonInput from './components/CommonInput';
+import Login from './modules/Login';
+import Profile from './modules/Profile';
+import Signup from './modules/Signup'; 
+
  function App() {
 //   const [count, setCount] = useState(0);
 
@@ -37,32 +41,57 @@ import CommonInput from './components/CommonInput';
 //     </div>
 //   );
 
-const [email,setEmail] = useState("");
-const [username,setUsername] = useState("");
+// const [email,setEmail] = useState("");
+// const [username,setUsername] = useState("");
 
-const handleEmailChange = (e) =>{
-  setEmail(e.target.value);
+// const handleEmailChange = (e) =>{
+//   setEmail(e.target.value);
+// }
+
+// const handleUsernameChange = (e) =>{
+//   setEmail(e.target.value);
+// }
+//  console.log(email);
+//  const handleButtonClick = () => {
+
+//  }
+//  return(
+//  <div>
+// <CommonInput
+// type={"text"} placeHolder={"enter your Username"} value={username} onChange={handleUsernameChange}
+// />
+
+// <CommonInput
+// type={"email"} placeHolder={"enter your Email"} value={email} onChange={handleEmailChange}
+// />
+
+// <CommonButton onClick={handleButtonClick} label='Submit'/>
+//  </div>)
+
+
+const [currentpage,setCurrentpage] = useState("login");
+const [loading,setLoading] = useState(true);
+
+useEffect(() =>{
+  const userData = localStorage.getItem("userData");
+  if(userData){
+  setTimeout(() => {
+    setCurrentpage("profile");
+  }, 2000);
+}
+setLoading(false)
+},[]
+);
+
+if(loading) return <h1>loading...</h1>
+return (
+<>
+{currentpage === "login" && <Login setPage={setCurrentpage}/>}
+{currentpage === "signup" && <Signup setPage={setCurrentpage}/>}
+{currentpage === "profile" && <Profile setPage={setCurrentpage}/>}
+</>
+);
 }
 
-const handleUsernameChange = (e) =>{
-  setEmail(e.target.value);
-}
- console.log(email);
- const handleButtonClick = () => {
-
- }
- return(
- <div>
-<CommonInput
-type={"text"} placeHolder={"enter your Username"} value={username} onChange={handleUsernameChange}
-/>
-
-<CommonInput
-type={"email"} placeHolder={"enter your Email"} value={email} onChange={handleEmailChange}
-/>
-
-<CommonButton onClick={handleButtonClick} label='Submit'/>
- </div>)
-}
 
 export default App;
